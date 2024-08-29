@@ -23,6 +23,6 @@ public class dtoNewAddProducts {
     private String description;
     
     @NotNull
-    private int quantity;
+    private Long quantity;
     
 }

@@ -27,14 +27,19 @@ public class Damaged {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDamaged;
     
-    @NotBlank
-    private String description;
-    
     @NotNull
     private int quantity;
+    
+    @NotBlank
+    private String description;
     
     @ManyToOne(targetEntity = Products.class, cascade = CascadeType.PERSIST)
     @JsonBackReference
     private Products product;
+    
+    @Override
+    public String toString() {
+        return  description;
+    }
     
 }

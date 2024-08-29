@@ -38,10 +38,10 @@ public class Products {
     private Long stock;
     
     //bajas
-    private Long low;
+    private long low;
     
     //vendidos
-    private Long sold;
+    private long sold;
     
     @OneToMany(targetEntity = Damaged.class, fetch = FetchType.LAZY, mappedBy = "product")
     @JsonManagedReference

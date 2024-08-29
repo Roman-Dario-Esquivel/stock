@@ -11,14 +11,24 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Venta {
+public class ProductsData {
     
     private Long idProduct;
 
-    
     private String description;
 
     //disponibles
     private Long available;
+
+    //total
+    private Long stock;
+
+    //bajas
+    private long low;
+
+    //vendidos
+    private long sold;
     
+    private String damaged;
+
 }

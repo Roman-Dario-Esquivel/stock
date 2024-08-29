@@ -21,10 +21,9 @@ public class dtoDamagedProducts {
 
     @NotNull
     private Long id;
-    private String description;
     @NotBlank(message = "cant be empty")
     private String reason;
     @NotNull 
     private int quantity;
-    
+
 }

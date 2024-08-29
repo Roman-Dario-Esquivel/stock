@@ -17,16 +17,14 @@ import org.springframework.validation.annotation.Validated;
 @Setter
 @Builder
 @Validated
-public class dtoAauxProducts {
+public class dtoAuxProducts {
     //es de venta,agregar mas stock 
 
-    @NotNull
-    private Long id;
     
     @NotBlank(message = "cant be empty")
     private String description;
     
     @NotNull
-    private int quantity;
+    private Long quantity;
 
 }
