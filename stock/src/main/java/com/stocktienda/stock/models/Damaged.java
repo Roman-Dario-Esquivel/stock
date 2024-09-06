@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,9 +25,6 @@ public class Damaged {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDamaged;
-    
-    @NotNull
-    private int quantity;
     
     @NotBlank
     private String description;

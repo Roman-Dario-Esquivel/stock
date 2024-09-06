@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IDamagedRepository extends JpaRepository<Damaged, Long>{
     
+    public boolean existsByDescription(String name);
+    
 }

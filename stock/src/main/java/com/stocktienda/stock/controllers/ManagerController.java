@@ -3,8 +3,9 @@ package com.stocktienda.stock.controllers;
 import com.stocktienda.stock.ModelsAuxiliary.ProductsData;
 import com.stocktienda.stock.dtos.dtoAuxProducts;
 import com.stocktienda.stock.dtos.dtoNewAddProducts;
-import com.stocktienda.stock.models.Products;
 import com.stocktienda.stock.service.interfaces.IManagerService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/manager")
+@Tag(name = "Administrador", description = "Operaciones relacionadas con la administracion")
 public class ManagerController {
 
     @Autowired
     private final IManagerService managerService;
 
+    
     @GetMapping("/products")
+    @Operation(summary = "Metodo lista productos administrador", description = "Metodo lista productos administrador asi observa")
     public ResponseEntity<List<ProductsData>> listProducts() {
         List<ProductsData> list = managerService.listAlllManager();
         if (!list.isEmpty()) {
@@ -37,8 +41,9 @@ public class ManagerController {
     }
 
     @GetMapping("/detail/{id}")
-    public ResponseEntity<Products> getByIdManager(@PathVariable("id") long id) {
-        Products product = managerService.getOneManager(id);
+    @Operation(summary = "Metodo que devuelve uno administracion", description = "Metodo que devuelve uno administracion ")
+    public ResponseEntity<ProductsData> getByIdManager(@PathVariable("id") long id) {
+        ProductsData product = managerService.getOneManager(id);
         if (product != null) {
             return new ResponseEntity<>(product, HttpStatus.OK);
         } else {
@@ -47,18 +52,20 @@ public class ManagerController {
     }
 
     @PostMapping("/create")
+    @Operation(summary = "Metodo de creacion de producto", description = "Metodo de creacion de producto nuevo confirmacion con true")
     public ResponseEntity<?> createManager(@RequestBody dtoNewAddProducts dtoproduct) {
         return new ResponseEntity<>(this.managerService.saveProduct(dtoproduct), HttpStatus.CREATED);
     }
 
     @PutMapping("/updatestock/{id}")
+    @Operation(summary = "Metodo de actualizacion de stock", description = "Metodo de actualizacion de stock confirmacion con true")
     public ResponseEntity<?> updateStock(@PathVariable("id") long id, @RequestBody dtoAuxProducts dtoproducts) {
-        Products products = this.managerService.increase(id, dtoproducts);
-        if (products != null) {
+        boolean products = this.managerService.increase(id, dtoproducts);
+        if (products) {
             return new ResponseEntity<>(products, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
 }
