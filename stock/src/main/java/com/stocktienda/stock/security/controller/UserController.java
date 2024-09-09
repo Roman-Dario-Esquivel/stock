@@ -20,7 +20,7 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("/login")
-    @Operation(summary = "Metodo de loguin", description = "Metodo de loguin se manda usuario y contraseña ")
+    @Operation(summary = "Metodo de login", description = "Metodo de loguin se manda usuario y contraseña ")
     public boolean login(@RequestBody UserDto user) {
         return userService.login(user);
     }

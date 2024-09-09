@@ -29,9 +29,9 @@ public class DamagedService implements IDamagedService {
                 .orElseThrow(() -> new RuntimeException("producto no existe"));
 
         if (product.getAvailable() >= dtodamaged.getQuantity()) {
-            if (!damagedRepository.existsByDescription(dtodamaged.getReason())) {
+            if (!damagedRepository.existsByDescription(dtodamaged.getReason().toLowerCase())) {
                 Damaged damaged = Damaged.builder()
-                        .description(dtodamaged.getReason())
+                        .description(dtodamaged.getReason().toLowerCase())
                         .product(product)
                         .build();
                 product.getDamagedlist().add(damaged);
