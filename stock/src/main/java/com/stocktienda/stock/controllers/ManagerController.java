@@ -1,6 +1,7 @@
 package com.stocktienda.stock.controllers;
 
 import com.stocktienda.stock.ModelsAuxiliary.ProductsData;
+import com.stocktienda.stock.dtos.dtoAuxPrice;
 import com.stocktienda.stock.dtos.dtoAuxProducts;
 import com.stocktienda.stock.dtos.dtoNewAddProducts;
 import com.stocktienda.stock.service.interfaces.IManagerService;
@@ -67,5 +68,16 @@ public class ManagerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+    
+    @PutMapping("/updatesprice/{id}")
+    @Operation(summary = "Metodo de actualizacion de Precio", description = "Metodo de actualizacion de precio confirmacion con true")
+    public ResponseEntity<?> updatePrice(@PathVariable("id") long id, @RequestBody dtoAuxPrice dtoprice) {
+        boolean products = this.managerService.updatePrice(id, dtoprice);
+        if (products) {
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
 }

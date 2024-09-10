@@ -2,6 +2,7 @@ package com.stocktienda.stock.service.implementations;
 
 import com.stocktienda.stock.ModelsAuxiliary.ProductsData;
 import com.stocktienda.stock.ModelsAuxiliary.Sales;
+import com.stocktienda.stock.dtos.dtoAuxPrice;
 import com.stocktienda.stock.dtos.dtoAuxProducts;
 import com.stocktienda.stock.dtos.dtoNewAddProducts;
 import com.stocktienda.stock.exception.CustomException;
@@ -92,6 +93,7 @@ public class ProductsService implements ISalesService, IManagerService {
                 .available(newProduct.getQuantity())
                 .low(0)
                 .sold(0)
+                .price(newProduct.getPrice())
                 .build();
         Products saveProduct = productsRepository.save(product);
         return saveProduct.getIdProduct();
@@ -146,6 +148,14 @@ public class ProductsService implements ISalesService, IManagerService {
         Products saveProduct = productsRepository.save(product);
         return saveProduct != null;
 
+    }
+    
+    @Override
+    public boolean updatePrice(Long idProducts, dtoAuxPrice dtoprice){
+        Products product = this.getOneProducts(idProducts);
+        product.setPrice(dtoprice.getPrice());        
+        Products saveProduct = productsRepository.save(product);
+    return saveProduct != null;
     }
 
 }

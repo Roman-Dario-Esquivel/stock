@@ -14,14 +14,14 @@ public interface IProductsRepository extends JpaRepository<Products, Long>{
     
     public Optional<Products> findByIdProduct(Long id);
 
-    @Query("SELECT  new com.stocktienda.stock.ModelsAuxiliary.Sales(p.idProduct, p.description, p.available, p.sold) FROM Products p WHERE p.idProduct =:id")
+    @Query("SELECT  new com.stocktienda.stock.ModelsAuxiliary.Sales(p.idProduct, p.description, p.available, p.sold, p.price) FROM Products p WHERE p.idProduct =:id")
     public Optional<Sales> findByIdSales(@Param("id") Long id);
     
     public Optional<Products> findByDescription(String name);
 
     public boolean existsByDescription(String name);
     
-    @Query("SELECT new com.stocktienda.stock.ModelsAuxiliary.Sales(p.idProduct, p.description, p.available, p.sold) FROM Products p")
+    @Query("SELECT new com.stocktienda.stock.ModelsAuxiliary.Sales(p.idProduct, p.description, p.available, p.sold, p.price) FROM Products p")
     public List<Sales> viewProrductsSales();
     
 }

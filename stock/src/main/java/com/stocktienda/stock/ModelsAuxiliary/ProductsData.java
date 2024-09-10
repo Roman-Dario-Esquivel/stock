@@ -30,5 +30,7 @@ public class ProductsData {
     private long sold;
     //lista de dañados
     private String damaged;
+    //precio
+    private double price;
 
 }

@@ -23,29 +23,32 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Products {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProduct;
-    
+
     @NotBlank
     private String description;
-    
+
     //disponibles
     private Long available;
-    
+
     //total
     private Long stock;
-    
+
     //bajas
     private long low;
-    
+
     //vendidos
     private long sold;
-    
+
+    //precio
+    private double price;
+
     @OneToMany(targetEntity = Damaged.class, fetch = FetchType.LAZY, mappedBy = "product")
     @JsonManagedReference
     @Builder.Default
     private List<Damaged> damagedlist = new ArrayList<>();
-    
+
 }

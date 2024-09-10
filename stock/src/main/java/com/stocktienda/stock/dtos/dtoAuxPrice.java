@@ -1,6 +1,5 @@
 package com.stocktienda.stock.dtos;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,15 +16,10 @@ import org.springframework.validation.annotation.Validated;
 @Setter
 @Builder
 @Validated
-public class dtoNewAddProducts {
-
-    @NotBlank(message = "cant be empty")
-    private String description;
-    
-    @NotNull
-    private Long quantity;
+public class dtoAuxPrice {
     
     //precio
+    @NotNull(message = "no vacio")
     private double price;
     
 }
