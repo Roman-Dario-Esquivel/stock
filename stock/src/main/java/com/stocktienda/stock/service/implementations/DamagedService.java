@@ -16,7 +16,6 @@ public class DamagedService implements IDamagedService {
     private final IDamagedRepository damagedRepository;
     private final IProductsRepository productsRepository;
 
-    
     public DamagedService(IDamagedRepository damagedRepository, IProductsRepository productsRepository) {
         this.damagedRepository = damagedRepository;
         this.productsRepository = productsRepository;
@@ -29,6 +28,24 @@ public class DamagedService implements IDamagedService {
                 .orElseThrow(() -> new RuntimeException("producto no existe"));
 
         if (product.getAvailable() >= dtodamaged.getQuantity()) {
+            boolean encontrado = false;
+            for (Damaged damaged : product.getDamagedlist()) {
+                if (damaged.getDescription().equals(dtodamaged.getReason())) {
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            // Si no se encuentra el producto, agregarlo al final
+            if (!encontrado) {
+                Damaged damagedsave = Damaged.builder()
+                        .description(dtodamaged.getReason().toLowerCase())
+                        .product(product)
+                        .build();
+                product.getDamagedlist().add(damagedsave);
+                damagedRepository.save(damagedsave);
+            }
+            /*
             if (!damagedRepository.existsByDescription(dtodamaged.getReason().toLowerCase())) {
                 Damaged damaged = Damaged.builder()
                         .description(dtodamaged.getReason().toLowerCase())
@@ -37,7 +54,7 @@ public class DamagedService implements IDamagedService {
                 product.getDamagedlist().add(damaged);
                 damagedRepository.save(damaged);
             }
-
+             */
             product.setAvailable(product.getAvailable() - dtodamaged.getQuantity());
             product.setLow(product.getLow() + dtodamaged.getQuantity());
 

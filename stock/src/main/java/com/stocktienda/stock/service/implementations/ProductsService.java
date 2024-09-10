@@ -50,7 +50,7 @@ public class ProductsService implements ISalesService, IManagerService {
 
     @Override
     public List<Sales> listAlllSales() {
-        return this.productsRepository.mostrarProrductsVenta();
+        return this.productsRepository.viewProrductsSales();
     }
 
     @Override
@@ -109,7 +109,7 @@ public class ProductsService implements ISalesService, IManagerService {
 
         if (product.getAvailable() < dtoproducts.getQuantity()) {
 
-            throw new CustomException("Ocurrió un error en el servicio no se puede llevar a cabo la operacion no hay stock suficiente");
+            throw new CustomException(" La cantidad a vender excede el stock disponible");
 
         }
 
@@ -137,7 +137,7 @@ public class ProductsService implements ISalesService, IManagerService {
 
         if (product.getSold() < dtoproducts.getQuantity()) {
 
-            throw new CustomException("Ocurrió un error en el servicio no se puede devolver devido que es maas de lo vendido");
+            throw new CustomException(" La cantidad a devolver supera la cantidad de unidades vendidas");
 
         }
 

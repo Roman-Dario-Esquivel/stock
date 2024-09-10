@@ -28,7 +28,7 @@ public class ProductsData {
 
     //vendidos
     private long sold;
-    
+    //lista de dañados
     private String damaged;
 
 }

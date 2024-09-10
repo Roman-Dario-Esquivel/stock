@@ -20,5 +20,7 @@ public class Sales {
 
     //disponibles
     private Long available;
+    //vendidos
+    private long sold;
     
 }
