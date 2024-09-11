@@ -40,6 +40,7 @@ public class ProductsService implements ISalesService, IManagerService {
             auxdata.setStock(product.getStock());
             auxdata.setLow(product.getLow());
             auxdata.setSold(product.getSold());
+            auxdata.setPrice(product.getPrice());
             auxdata.setDamaged(product.getDamagedlist()
                     .stream()
                     .map(Damaged::toString)
