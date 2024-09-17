@@ -19,5 +19,7 @@ public interface IManagerService {
     public Long saveProduct(dtoNewAddProducts newProduct);
     
     public boolean updatePrice(Long idProducts, dtoAuxPrice dtoprice);
+    
+    public boolean removedLogical(Long idProducts);
 
 }

@@ -22,14 +22,13 @@ public class ProductsService implements ISalesService, IManagerService {
 
     private final IProductsRepository productsRepository;
 
-
     public ProductsService(IProductsRepository productsRepository) {
         this.productsRepository = productsRepository;
     }
 
     @Override
     public List<ProductsData> listAlllManager() {
-        List<Products> products = this.productsRepository.findAll();
+        List<Products> products = this.productsRepository.findAllWithoutDeleted();
         List<ProductsData> productsData = new ArrayList<>();
 
         for (Products product : products) {
@@ -39,6 +38,7 @@ public class ProductsService implements ISalesService, IManagerService {
             auxdata.setAvailable(product.getAvailable());
             auxdata.setStock(product.getStock());
             auxdata.setLow(product.getLow());
+            auxdata.setReserve(product.getReserve());
             auxdata.setSold(product.getSold());
             auxdata.setPrice(product.getPrice());
             auxdata.setDamaged(product.getDamagedlist()
@@ -68,10 +68,11 @@ public class ProductsService implements ISalesService, IManagerService {
         auxdata.setStock(product.getStock());
         auxdata.setLow(product.getLow());
         auxdata.setSold(product.getSold());
+        auxdata.setReserve(product.getReserve());
         auxdata.setDamaged(product.getDamagedlist()
                 .stream()
                 .map(Damaged::toString)
-                .collect(Collectors.joining(".\n")));
+                .collect(Collectors.joining("\n")));
         return auxdata;
     }
 
@@ -94,6 +95,8 @@ public class ProductsService implements ISalesService, IManagerService {
                 .available(newProduct.getQuantity())
                 .low(0)
                 .sold(0)
+                .deleted(false)
+                .reserve(0)
                 .price(newProduct.getPrice())
                 .build();
         Products saveProduct = productsRepository.save(product);
@@ -150,13 +153,21 @@ public class ProductsService implements ISalesService, IManagerService {
         return saveProduct != null;
 
     }
-    
+
     @Override
-    public boolean updatePrice(Long idProducts, dtoAuxPrice dtoprice){
+    public boolean updatePrice(Long idProducts, dtoAuxPrice dtoprice) {
         Products product = this.getOneProducts(idProducts);
-        product.setPrice(dtoprice.getPrice());        
+        product.setPrice(dtoprice.getPrice());
         Products saveProduct = productsRepository.save(product);
-    return saveProduct != null;
+        return saveProduct != null;
+    }
+
+     @Override
+    public boolean removedLogical(Long idProducts) {
+        Products product = this.getOneProducts(idProducts);
+        product.setDeleted(true);
+        Products saveProduct = productsRepository.save(product);
+        return saveProduct != null;
     }
 
 }

@@ -24,11 +24,11 @@ public class UserController {
     public boolean login(@RequestBody UserDto user) {
         return userService.login(user);
     }
-
+/*
     @PostMapping("/register")
     @Operation(summary = "Metodo de registro", description = "Se manda un Usuario y su contraseña")
     public User register(@RequestBody UserDto user) {
         return userService.register(user);
     }
-
+*/
 }

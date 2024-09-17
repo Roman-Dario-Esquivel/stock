@@ -1,18 +1,22 @@
-package com.stocktienda.stock.ModelsAuxiliary;
+package com.stocktienda.stock.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductsData {
+public class Report {
 
+    @Id
     private Long idProduct;
 
     private String description;
@@ -26,16 +30,16 @@ public class ProductsData {
     //bajas
     private long low;
 
-    //reservar
-    private long reserve;
-
     //vendidos
     private long sold;
 
-    //lista de dañados
-    private String damaged;
+    //reservar
+    private long reserve;
 
     //precio
     private double price;
+
+    //lista de dañados
+    private String damaged;
 
 }

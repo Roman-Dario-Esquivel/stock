@@ -2,7 +2,6 @@ package com.stocktienda.stock.controllers;
 
 import com.stocktienda.stock.ModelsAuxiliary.Sales;
 import com.stocktienda.stock.dtos.dtoAuxProducts;
-import com.stocktienda.stock.models.Products;
 import com.stocktienda.stock.service.interfaces.ISalesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

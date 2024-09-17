@@ -43,8 +43,19 @@ public class Products {
     //vendidos
     private long sold;
 
+    //reservar
+    private long reserve;
+
     //precio
     private double price;
+
+    // eliminado
+    private boolean deleted;
+
+    @OneToMany(targetEntity = Reservation.class, fetch = FetchType.LAZY, mappedBy = "product")
+    @JsonManagedReference
+    @Builder.Default
+    private List<Reservation> reservas = new ArrayList<>();
 
     @OneToMany(targetEntity = Damaged.class, fetch = FetchType.LAZY, mappedBy = "product")
     @JsonManagedReference

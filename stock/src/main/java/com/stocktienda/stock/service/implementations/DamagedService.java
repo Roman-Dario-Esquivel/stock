@@ -45,16 +45,7 @@ public class DamagedService implements IDamagedService {
                 product.getDamagedlist().add(damagedsave);
                 damagedRepository.save(damagedsave);
             }
-            /*
-            if (!damagedRepository.existsByDescription(dtodamaged.getReason().toLowerCase())) {
-                Damaged damaged = Damaged.builder()
-                        .description(dtodamaged.getReason().toLowerCase())
-                        .product(product)
-                        .build();
-                product.getDamagedlist().add(damaged);
-                damagedRepository.save(damaged);
-            }
-             */
+            
             product.setAvailable(product.getAvailable() - dtodamaged.getQuantity());
             product.setLow(product.getLow() + dtodamaged.getQuantity());
 
@@ -62,7 +53,8 @@ public class DamagedService implements IDamagedService {
             return saveDamaged != null;
 
         } else {
-            throw new CustomException("Ocurrió un error en el servicio. no se puede devolver no hay mercaderia suficiente");
+
+            throw new CustomException("No se puede  informar como dañado no hay productos disponibles para dar de baja ");
 
         }
 

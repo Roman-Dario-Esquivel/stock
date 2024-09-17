@@ -12,17 +12,21 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Sales {
-    
+
     private Long idProduct;
 
-    
     private String description;
 
     //disponibles
     private Long available;
+
     //vendidos
     private long sold;
+
+    //reservar
+    private long reserve;
+
     //precio
     private double price;
-    
+
 }

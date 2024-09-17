@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,6 @@ public class ManagerController {
     @Autowired
     private final IManagerService managerService;
 
-    
     @GetMapping("/products")
     @Operation(summary = "Metodo lista productos administrador", description = "Metodo lista productos administrador asi observa")
     public ResponseEntity<List<ProductsData>> listProducts() {
@@ -68,7 +68,7 @@ public class ManagerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
     @PutMapping("/updatesprice/{id}")
     @Operation(summary = "Metodo de actualizacion de Precio", description = "Metodo de actualizacion de precio confirmacion con true")
     public ResponseEntity<?> updatePrice(@PathVariable("id") long id, @RequestBody dtoAuxPrice dtoprice) {
@@ -79,5 +79,15 @@ public class ManagerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> eliminarProducto(@PathVariable Long id) {
+        boolean products = this.managerService.removedLogical(id);
+        if (products) {
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
