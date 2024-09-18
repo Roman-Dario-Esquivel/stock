@@ -22,7 +22,7 @@ import lombok.Setter;
 public class Customer {
 
     @Id
-    private Long documento;
+    private Long dni;
     
     private String name;
     
@@ -41,6 +41,6 @@ public class Customer {
     @OneToMany(targetEntity = Reservation.class, fetch = FetchType.LAZY, mappedBy = "customer")
     @JsonManagedReference
     @Builder.Default
-    private List<Reservation> resevations = new ArrayList<>();
+    private List<Reservation> reservations = new ArrayList<>();
     
 }

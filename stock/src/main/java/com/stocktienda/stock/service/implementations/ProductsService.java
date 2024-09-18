@@ -84,7 +84,7 @@ public class ProductsService implements ISalesService, IManagerService {
     @Override
     public Sales getOneSales(Long id) {
         return productsRepository.findByIdSales(id)
-                .orElseThrow(() -> new RuntimeException("Menu with that ID dont exist"));
+                .orElseThrow(() -> new RuntimeException("No existe producto"));
     }
 
     @Override
