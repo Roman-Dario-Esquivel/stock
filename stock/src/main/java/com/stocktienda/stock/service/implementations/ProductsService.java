@@ -13,12 +13,13 @@ import com.stocktienda.stock.service.interfaces.ISalesService;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.stocktienda.stock.service.interfaces.IManagerService;
+import com.stocktienda.stock.service.interfaces.IProductsService;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductsService implements ISalesService, IManagerService {
+public class ProductsService implements ISalesService, IManagerService, IProductsService {
 
     private final IProductsRepository productsRepository;
 
@@ -76,7 +77,8 @@ public class ProductsService implements ISalesService, IManagerService {
         return auxdata;
     }
 
-    private Products getOneProducts(Long id) {
+    @Override
+    public Products getOneProducts(Long id) {
         return productsRepository.findByIdProduct(id)
                 .orElseThrow(() -> new RuntimeException("No existe producto"));
     }
@@ -162,10 +164,42 @@ public class ProductsService implements ISalesService, IManagerService {
         return saveProduct != null;
     }
 
-     @Override
+    @Override
     public boolean removedLogical(Long idProducts) {
         Products product = this.getOneProducts(idProducts);
         product.setDeleted(true);
+        Products saveProduct = productsRepository.save(product);
+        return saveProduct != null;
+    }
+
+    @Override
+    public boolean createReserva(Long idProducts, long quantity) {
+        Products product = this.getOneProducts(idProducts);
+        if (product.getAvailable() < quantity) {
+
+            throw new CustomException(" La cantidad a vender excede el stock disponible");
+
+        }
+        product.setReserve(product.getReserve() + quantity);
+        product.setAvailable(product.getAvailable() - quantity);
+        Products saveProduct = productsRepository.save(product);
+        return saveProduct != null;
+    }
+
+    @Override
+    public boolean salesReserva(Long idProducts, long quantity) {
+        Products product = this.getOneProducts(idProducts);
+        product.setReserve(product.getReserve() - quantity);
+        product.setSold(product.getSold() + quantity);
+        Products saveProduct = productsRepository.save(product);
+        return saveProduct != null;
+    }
+
+    @Override
+    public boolean cancelReserva(Long idProducts, long quantity) {
+        Products product = this.getOneProducts(idProducts);
+        product.setReserve(product.getReserve() - quantity);
+        product.setAvailable(product.getAvailable() + quantity);
         Products saveProduct = productsRepository.save(product);
         return saveProduct != null;
     }

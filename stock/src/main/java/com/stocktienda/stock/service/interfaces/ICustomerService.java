@@ -1,11 +1,15 @@
 package com.stocktienda.stock.service.interfaces;
 
-import com.stocktienda.stock.ModelsAuxiliary.CustomerData;
+import com.stocktienda.stock.ModelsAuxiliary.ReservationCustomer;
 import com.stocktienda.stock.dtos.dtoCustomer;
+import com.stocktienda.stock.models.Customer;
+import java.util.List;
 
 public interface ICustomerService {
 
-    public CustomerData getOneCustomerData(Long dni);
+    public Customer getOneCustomer(Long dni);
+    
+    public List<ReservationCustomer> listDni(Long dni);
 
     public String verifyExistence(Long dni);
 
@@ -18,5 +22,5 @@ public interface ICustomerService {
     public boolean addCreditsEarned(Long dni);
 
     public boolean calculateConfidence(Long dni);
-
+    
 }

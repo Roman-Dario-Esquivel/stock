@@ -80,7 +80,9 @@ public class ManagerController {
         }
     }
 
+    
     @DeleteMapping("/delete/{id}")
+    @Operation(summary = "Metodo de eliminacion de productos", description = " Metodo de eliminacion de productos confirmacion con true")
     public ResponseEntity<?> eliminarProducto(@PathVariable Long id) {
         boolean products = this.managerService.removedLogical(id);
         if (products) {

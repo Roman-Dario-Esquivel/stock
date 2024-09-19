@@ -35,6 +35,8 @@ public class Reservation {
     private double deposit;
 
     private boolean active;
+    
+    private long quantity;
 
     @ManyToOne(targetEntity = Customer.class, cascade = CascadeType.PERSIST)
     @JsonBackReference

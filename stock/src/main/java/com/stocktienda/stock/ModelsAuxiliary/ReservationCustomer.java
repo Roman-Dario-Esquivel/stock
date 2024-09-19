@@ -11,8 +11,8 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReservationData {
-
+public class ReservationCustomer {
+    
     private Long id;
 
     //precio
@@ -20,10 +20,20 @@ public class ReservationData {
 
     //saldo
     private double balance;
-
+   
     //deposito
     private double deposit;
+    
+    //cantidad
+    private long quantity;
+    
+    //cliente
+    private String name;
+    // producto
+    private Long codigo;
 
     private String articulo;
+    
+      
     
 }
