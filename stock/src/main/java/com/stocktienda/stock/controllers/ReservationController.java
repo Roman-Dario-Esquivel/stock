@@ -58,7 +58,7 @@ public class ReservationController {
     @PutMapping("/updatedeposit/{id}")
     @Operation(summary = "Metodo de actualizacion de deposito", description = "Metodo de actualizacion de deposito confirmacion con true")
     public ResponseEntity<?> updateDeposit(@PathVariable("id") long id, @RequestBody double deposit) {
-        String reserva = this.reservationService.increaseDeposit(id,deposit);
+        double reserva = this.reservationService.increaseDeposit(id,deposit);
             return new ResponseEntity<>(reserva, HttpStatus.OK);
     }
 

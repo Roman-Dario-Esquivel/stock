@@ -12,7 +12,7 @@ public interface IReservationService {
     public List<ReservationDataList> listAllReservationActive();
     public boolean saveCustomerReservation(dtoReservationCustomer newReservation);
     public boolean saveReserva(dtoReservation newReservation);
-    public String increaseDeposit(Long id, double deposit);
+    public double increaseDeposit(Long id, double deposit);
     public boolean salesReserva(Long id);
     public boolean cancelReserva(Long id);
 }

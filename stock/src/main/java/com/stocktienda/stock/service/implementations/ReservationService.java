@@ -116,7 +116,7 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public String increaseDeposit(Long id, double deposit) {
+    public double increaseDeposit(Long id, double deposit) {
         Reservation reservation = getOneReservation(id);
         reservation.setDeposit(reservation.getDeposit() + deposit);
         reservation.setBalance(reservation.getPrice()-reservation.getDeposit());
@@ -125,10 +125,9 @@ public class ReservationService implements IReservationService {
             productsService.salesReserva(reservation.getId(),reservation.getQuantity());
             customerService.addCreditsCompleted(id);
             customerService.calculateConfidence(reservation.getCustomer().getDni());
-            double vuelto = reservation.getDeposit() - reservation.getPrice();
-            return "Se entrega el producto con codigo " + reservation.getProduct().getIdProduct() + " al completar el pago.El vuelto a dar es :" + vuelto;
+            return 0;
         } else{
-            return "Le queda pendiente un saldo de :" + reservation.getBalance();
+            return reservation.getBalance();
         }
 
     }
@@ -142,7 +141,6 @@ public class ReservationService implements IReservationService {
         productsService.salesReserva(reservation.getId(),reservation.getQuantity());
         customerService.addCreditsCompleted(reservation.getCustomer().getDni());
         customerService.calculateConfidence(reservation.getCustomer().getDni());
-        
         return saveReserva != null;
     }
 
