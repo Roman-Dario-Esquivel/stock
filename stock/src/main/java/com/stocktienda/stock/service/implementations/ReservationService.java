@@ -132,7 +132,7 @@ public class ReservationService implements IReservationService {
         reservation.setBalance(reservation.getPrice() - reservation.getDeposit());
         Reservation saveReserva = reservationRepository.save(reservation);
         if (reservation.getDeposit() >= reservation.getPrice()&&saveReserva != null) {
-            productsService.salesReserva(reservation.getId(), reservation.getQuantity());
+            productsService.salesReserva(reservation.getProduct().getIdProduct(), reservation.getQuantity());
             customerService.addCreditsCompleted(id);
             customerService.calculateConfidence(reservation.getCustomer().getDni());
             return 0;
@@ -149,7 +149,7 @@ public class ReservationService implements IReservationService {
         reservation.setBalance(0);
         reservation.setActive(false);
         Reservation saveReserva = reservationRepository.save(reservation);
-        productsService.salesReserva(reservation.getId(), reservation.getQuantity());
+        productsService.salesReserva(reservation.getProduct().getIdProduct(), reservation.getQuantity());
         customerService.addCreditsCompleted(reservation.getCustomer().getDni());
         customerService.calculateConfidence(reservation.getCustomer().getDni());
         return saveReserva != null;
