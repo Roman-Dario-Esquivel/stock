@@ -147,6 +147,7 @@ public class ReservationService implements IReservationService {
         Reservation reservation = getOneReservation(id);
         reservation.setDeposit(reservation.getPrice());
         reservation.setBalance(0);
+        reservation.setActive(false);
         Reservation saveReserva = reservationRepository.save(reservation);
         productsService.salesReserva(reservation.getId(), reservation.getQuantity());
         customerService.addCreditsCompleted(reservation.getCustomer().getDni());
