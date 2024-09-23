@@ -69,6 +69,10 @@ public class ReservationService implements IReservationService {
         customer.setDni(newReservation.getDni());
         customer.setName(newReservation.getName());
         customer.setNumberMobile(newReservation.getNumberMobile());
+        
+        if (products.getAvailable() < newReservation.getQuantity()) {
+            throw new CustomException("No se guardo reserva por no haver disponible");
+        }
         boolean customers = customerService.saveCustomer(customer);
         if (!customers) {
             throw new CustomException("No se guardo cliente");
@@ -91,12 +95,16 @@ public class ReservationService implements IReservationService {
         }
 
         return saveReserva != null;
+
     }
 
     @Override
     public boolean saveReserva(dtoReservation newReservation) {
         Products products = productsService.getOneProducts(newReservation.getCode());
         Customer custom = customerService.getOneCustomer(newReservation.getDni());
+        if (products.getAvailable() < newReservation.getQuantity()) {
+            throw new CustomException("No se guardo reserva por no haver disponible");
+        }
         Reservation reserva = Reservation.builder()
                 .active(true)
                 .balance((products.getPrice() * newReservation.getQuantity()) - newReservation.getDeposit())
@@ -108,25 +116,27 @@ public class ReservationService implements IReservationService {
                 .build();
 
         Reservation saveReserva = reservationRepository.save(reserva);
+
         if (saveReserva != null) {
             productsService.createReserva(products.getIdProduct(), saveReserva.getQuantity());
             customerService.addCreditsEarned(reserva.getCustomer().getDni());
         }
         return saveReserva != null;
+
     }
 
     @Override
     public double increaseDeposit(Long id, double deposit) {
         Reservation reservation = getOneReservation(id);
         reservation.setDeposit(reservation.getDeposit() + deposit);
-        reservation.setBalance(reservation.getPrice()-reservation.getDeposit());
+        reservation.setBalance(reservation.getPrice() - reservation.getDeposit());
         Reservation saveReserva = reservationRepository.save(reservation);
-        if (reservation.getDeposit() >= reservation.getPrice()) {
-            productsService.salesReserva(reservation.getId(),reservation.getQuantity());
+        if (reservation.getDeposit() >= reservation.getPrice()&&saveReserva != null) {
+            productsService.salesReserva(reservation.getId(), reservation.getQuantity());
             customerService.addCreditsCompleted(id);
             customerService.calculateConfidence(reservation.getCustomer().getDni());
             return 0;
-        } else{
+        } else {
             return reservation.getBalance();
         }
 
@@ -138,7 +148,7 @@ public class ReservationService implements IReservationService {
         reservation.setDeposit(reservation.getPrice());
         reservation.setBalance(0);
         Reservation saveReserva = reservationRepository.save(reservation);
-        productsService.salesReserva(reservation.getId(),reservation.getQuantity());
+        productsService.salesReserva(reservation.getId(), reservation.getQuantity());
         customerService.addCreditsCompleted(reservation.getCustomer().getDni());
         customerService.calculateConfidence(reservation.getCustomer().getDni());
         return saveReserva != null;
