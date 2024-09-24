@@ -1,6 +1,7 @@
 package com.stocktienda.stock.controllers;
 
 import com.stocktienda.stock.ModelsAuxiliary.ReservationDataList;
+import com.stocktienda.stock.dtos.dtoNewReservation;
 import com.stocktienda.stock.dtos.dtoReservation;
 import com.stocktienda.stock.dtos.dtoReservationCustomer;
 import com.stocktienda.stock.service.interfaces.IReservationService;
@@ -57,8 +58,8 @@ public class ReservationController {
    
     @PutMapping("/updatedeposit/{id}")
     @Operation(summary = "Metodo de actualizacion de deposito", description = "Metodo de actualizacion de deposito confirmacion con true")
-    public ResponseEntity<?> updateDeposit(@PathVariable("id") long id, @RequestBody double deposit) {
-        double reserva = this.reservationService.increaseDeposit(id,deposit);
+    public ResponseEntity<?> updateDeposit(@PathVariable("id") long id, @RequestBody dtoNewReservation deposit) {
+        double reserva = this.reservationService.increaseDeposit(id,deposit.getDepositNew());
             return new ResponseEntity<>(reserva, HttpStatus.OK);
     }
 
