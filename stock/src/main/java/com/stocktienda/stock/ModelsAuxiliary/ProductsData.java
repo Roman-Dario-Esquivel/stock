@@ -37,5 +37,7 @@ public class ProductsData {
 
     //precio
     private double price;
+    
+    private double card;
 
 }

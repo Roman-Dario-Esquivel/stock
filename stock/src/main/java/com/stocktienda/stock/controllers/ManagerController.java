@@ -1,6 +1,7 @@
 package com.stocktienda.stock.controllers;
 
 import com.stocktienda.stock.ModelsAuxiliary.ProductsData;
+import com.stocktienda.stock.dtos.dtoAuxCard;
 import com.stocktienda.stock.dtos.dtoAuxPrice;
 import com.stocktienda.stock.dtos.dtoAuxProducts;
 import com.stocktienda.stock.dtos.dtoNewAddProducts;
@@ -80,6 +81,16 @@ public class ManagerController {
         }
     }
 
+    @PutMapping("/updatescard/{id}")
+    @Operation(summary = "Metodo de actualizacion de Precio de tarjeta", description = "Metodo de actualizacion de precio de tarjeta confirmacion con true")
+    public ResponseEntity<?> updateCard(@PathVariable("id") long id, @RequestBody dtoAuxCard dtoprice) {
+        boolean products = this.managerService.updateCard(id, dtoprice);
+        if (products) {
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Metodo de eliminacion de productos", description = " Metodo de eliminacion de productos confirmacion con true")

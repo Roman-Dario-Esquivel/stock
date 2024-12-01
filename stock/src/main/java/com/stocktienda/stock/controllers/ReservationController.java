@@ -75,7 +75,7 @@ public class ReservationController {
     } 
     
     @PutMapping("/complete/{id}")
-    @Operation(summary = "Metodo de finalizacion de zapatilla", description = "Metodo de finalizacion de zapatilla confirmacion con true")
+    @Operation(summary = "Metodo de finalizacion de zapatilla", description = "Metodo de finalizacion de productos confirmacion con true")
     public ResponseEntity<?> completeReservation(@PathVariable("id") long id) {
         boolean reservar = this.reservationService.salesReserva(id);
         if (reservar) {

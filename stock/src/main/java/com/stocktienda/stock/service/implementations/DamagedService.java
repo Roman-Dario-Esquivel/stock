@@ -30,7 +30,7 @@ public class DamagedService implements IDamagedService {
         if (product.getAvailable() >= dtodamaged.getQuantity()) {
             boolean encontrado = false;
             for (Damaged damaged : product.getDamagedlist()) {
-                if (damaged.getDescription().equals(dtodamaged.getReason())) {
+                if (damaged.getDescription().equals(dtodamaged.getReason().toLowerCase())) {
                     encontrado = true;
                     break;
                 }

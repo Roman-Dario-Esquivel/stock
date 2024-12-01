@@ -1,6 +1,7 @@
 package com.stocktienda.stock.service.interfaces;
 
 import com.stocktienda.stock.ModelsAuxiliary.ProductsData;
+import com.stocktienda.stock.dtos.dtoAuxCard;
 import com.stocktienda.stock.dtos.dtoAuxPrice;
 import com.stocktienda.stock.dtos.dtoAuxProducts;
 import com.stocktienda.stock.dtos.dtoNewAddProducts;
@@ -19,6 +20,8 @@ public interface IManagerService {
     public Long saveProduct(dtoNewAddProducts newProduct);
     
     public boolean updatePrice(Long idProducts, dtoAuxPrice dtoprice);
+    
+    public boolean updateCard(Long idProducts, dtoAuxCard dtoprice);
     
     public boolean removedLogical(Long idProducts);
 

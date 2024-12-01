@@ -23,24 +23,24 @@ public class Customer {
 
     @Id
     private Long dni;
-    
+
     private String name;
-    
+
     //cantidad de creditos optenidos
     private int creditsEarned;
-    
+
     // cantidad de creditos finalizados
     private int creditsCompleted;
-    
+
     //numero de telefono
     private String numberMobile;
-    
+
     // confianza
     private float confidence;
-    
+
     @OneToMany(targetEntity = Reservation.class, fetch = FetchType.LAZY, mappedBy = "customer")
     @JsonManagedReference
     @Builder.Default
     private List<Reservation> reservations = new ArrayList<>();
-    
+
 }

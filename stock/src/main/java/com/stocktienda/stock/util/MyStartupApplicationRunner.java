@@ -25,7 +25,7 @@ public class MyStartupApplicationRunner implements CommandLineRunner {
             
             UserDto userDto = new UserDto();
             userDto.setUsername(User);
-            String password ="8EC47Be3";
+            String password ="RocioDeMiel2524";
             userDto.setPassword(password);
             userService.register(userDto);
             System.out.println("Se genero el usuario.");

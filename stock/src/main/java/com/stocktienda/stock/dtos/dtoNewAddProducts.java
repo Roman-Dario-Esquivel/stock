@@ -21,11 +21,13 @@ public class dtoNewAddProducts {
 
     @NotBlank(message = "cant be empty")
     private String description;
-    
+
     @NotNull
     private Long quantity;
-    
+
     //precio
     private double price;
-    
+
+    private double card;
+
 }

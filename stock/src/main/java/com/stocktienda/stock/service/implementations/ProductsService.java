@@ -2,6 +2,7 @@ package com.stocktienda.stock.service.implementations;
 
 import com.stocktienda.stock.ModelsAuxiliary.ProductsData;
 import com.stocktienda.stock.ModelsAuxiliary.Sales;
+import com.stocktienda.stock.dtos.dtoAuxCard;
 import com.stocktienda.stock.dtos.dtoAuxPrice;
 import com.stocktienda.stock.dtos.dtoAuxProducts;
 import com.stocktienda.stock.dtos.dtoNewAddProducts;
@@ -42,6 +43,7 @@ public class ProductsService implements ISalesService, IManagerService, IProduct
             auxdata.setReserve(product.getReserve());
             auxdata.setSold(product.getSold());
             auxdata.setPrice(product.getPrice());
+            auxdata.setCard(product.getCard());
             auxdata.setDamaged(product.getDamagedlist()
                     .stream()
                     .map(Damaged::toString)
@@ -68,6 +70,8 @@ public class ProductsService implements ISalesService, IManagerService, IProduct
         auxdata.setAvailable(product.getAvailable());
         auxdata.setStock(product.getStock());
         auxdata.setLow(product.getLow());
+        auxdata.setPrice(product.getPrice());
+        auxdata.setCard(product.getCard());
         auxdata.setSold(product.getSold());
         auxdata.setReserve(product.getReserve());
         auxdata.setDamaged(product.getDamagedlist()
@@ -100,6 +104,7 @@ public class ProductsService implements ISalesService, IManagerService, IProduct
                 .deleted(false)
                 .reserve(0)
                 .price(newProduct.getPrice())
+                .card(0)
                 .build();
         Products saveProduct = productsRepository.save(product);
         return saveProduct.getIdProduct();
@@ -162,6 +167,15 @@ public class ProductsService implements ISalesService, IManagerService, IProduct
         product.setPrice(dtoprice.getPrice());
         Products saveProduct = productsRepository.save(product);
         return saveProduct != null;
+    }
+
+    @Override
+    public boolean updateCard(Long idProducts, dtoAuxCard dtoprice) {
+        Products product = this.getOneProducts(idProducts);
+        product.setCard(dtoprice.getCard());
+        Products saveProduct = productsRepository.save(product);
+        return saveProduct != null;
+
     }
 
     @Override

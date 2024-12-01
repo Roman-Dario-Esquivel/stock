@@ -29,7 +29,7 @@ public class PdfController {
 
     @GetMapping("/generate")
     public ResponseEntity<?> generatePdf() throws IOException {
-
+/*
         String currentDirectory = System.getProperty("user.dir");
 
         // Crear la ruta para la carpeta "informes" dentro del directorio actual
@@ -56,8 +56,41 @@ public class PdfController {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al generar el PDF.");
-        }
+        }*/
 
+         // Obtener la carpeta de Documentos del usuario
+        String documentsPath = System.getProperty("user.home") + "\\Documents";
+
+        // Crear la ruta para la carpeta "informes" dentro de la carpeta de Documentos
+        String folderPath = documentsPath + File.separator + "informes";
+        Path folder = Paths.get(folderPath);
+
+        // Crear la carpeta "informes" si no existe
+        try {
+            if (!Files.exists(folder)) {
+                Files.createDirectories(folder);  // Crea los directorios si no existen
+            }
+
+            LocalDate fechaActual = LocalDate.now();
+            int dia = fechaActual.getDayOfMonth();
+            int mes = fechaActual.getMonthValue();
+            int año = fechaActual.getYear();
+            String fechaConcatenada = dia + "-" + mes + "-" + año;
+
+            // Crear el nombre del archivo PDF con la fecha
+            String filePath = folderPath + File.separator + "informe_" + fechaConcatenada + ".pdf";
+            boolean isGenerated = pdfService.generatePdf(filePath);
+            if (isGenerated) {
+                String respuesta = "PDF generado y guardado en: " + filePath;
+                return new ResponseEntity<>(respuesta, HttpStatus.OK);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Error al generar el PDF.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al crear la carpeta 'informes': " + e.getMessage());
+        }
     }
 
     @GetMapping("/download")

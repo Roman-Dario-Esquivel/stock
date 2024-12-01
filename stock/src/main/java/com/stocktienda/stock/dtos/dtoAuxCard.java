@@ -1,6 +1,5 @@
 package com.stocktienda.stock.dtos;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,22 +17,9 @@ import org.springframework.validation.annotation.Validated;
 @Setter
 @Builder
 @Validated
-public class dtoReservationCustomer {
-
-    @NotNull
-    private Long dni;
-
-    @NotBlank(message = "ingrese un nombre ")
-    private String name;
-
-
-    private String numberMobile;
-
-    @NotNull
-    private double deposit;
-
-    @NotNull
-    private Long code;
-
-    private int quantity;
+public class dtoAuxCard {
+    
+    //precio
+    @NotNull(message = "no vacio")
+    private double card;
 }

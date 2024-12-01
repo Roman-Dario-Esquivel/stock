@@ -12,6 +12,7 @@ import com.stocktienda.stock.repositorys.IReservationRepository;
 import com.stocktienda.stock.service.interfaces.ICustomerService;
 import com.stocktienda.stock.service.interfaces.IProductsService;
 import com.stocktienda.stock.service.interfaces.IReservationService;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,7 @@ public class ReservationService implements IReservationService {
     public Reservation getOneReservation(Long id) {
         Optional<Reservation> optionalReservation = reservationRepository.findById(id);
         Reservation reservation = optionalReservation
-                .orElseThrow(() -> new RuntimeException("El cliente no esta cargado ni tiene reservas"));
+                .orElseThrow(() -> new RuntimeException("No se guardó la reserva por exceder la cantidad disponible"));
         return reservation;
     }
 
@@ -71,7 +72,7 @@ public class ReservationService implements IReservationService {
         customer.setNumberMobile(newReservation.getNumberMobile());
 
         if (products.getAvailable() < newReservation.getQuantity()) {
-            throw new CustomException("No se guardo reserva por no haver disponible");
+            throw new CustomException("No se guardó la reserva por exceder la cantidad disponible");
         }
         boolean customers = customerService.saveCustomer(customer);
         if (!customers) {
@@ -80,6 +81,7 @@ public class ReservationService implements IReservationService {
         Customer custom = customerService.getOneCustomer(newReservation.getDni());
         Reservation reserva = Reservation.builder()
                 .active(true)
+                .fecha(LocalDate.now())
                 .balance((products.getPrice() * newReservation.getQuantity()) - newReservation.getDeposit())
                 .deposit(newReservation.getDeposit())
                 .price(products.getPrice() * newReservation.getQuantity())
@@ -107,6 +109,7 @@ public class ReservationService implements IReservationService {
         }
         Reservation reserva = Reservation.builder()
                 .active(true)
+                .fecha(LocalDate.now())
                 .balance((products.getPrice() * newReservation.getQuantity()) - newReservation.getDeposit())
                 .deposit(newReservation.getDeposit())
                 .price(products.getPrice() * newReservation.getQuantity())
@@ -165,5 +168,10 @@ public class ReservationService implements IReservationService {
         Reservation saveReserva = reservationRepository.save(reservation);
         productsService.cancelReserva(reservation.getProduct().getIdProduct(), reservation.getQuantity());
         return saveReserva != null;
+    }
+    
+    @Override
+    public List<Reservation> AllReservationActive() {
+        return reservationRepository.findAllWithoutActive();
     }
 }

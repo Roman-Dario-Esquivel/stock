@@ -29,4 +29,7 @@ public class Sales {
     //precio
     private double price;
 
+    //precio en tarjeta
+    private double card;
+    
 }

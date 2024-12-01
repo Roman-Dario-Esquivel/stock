@@ -14,7 +14,7 @@ public interface IProductsRepository extends JpaRepository<Products, Long>{
     
     public Optional<Products> findByIdProduct(Long id);
 
-    @Query("SELECT  new com.stocktienda.stock.ModelsAuxiliary.Sales(p.idProduct, p.description, p.available, p.sold, p.reserve, p.price) FROM Products p WHERE p.idProduct =:id")
+    @Query("SELECT  new com.stocktienda.stock.ModelsAuxiliary.Sales(p.idProduct, p.description, p.available, p.sold, p.reserve, p.price, p.card) FROM Products p WHERE p.idProduct =:id")
     public Optional<Sales> findByIdSales(@Param("id") Long id);
     
     @Query("SELECT p FROM Products p WHERE p.deleted = false")
@@ -24,7 +24,7 @@ public interface IProductsRepository extends JpaRepository<Products, Long>{
 
     public boolean existsByDescription(String name);
     
-    @Query("SELECT new com.stocktienda.stock.ModelsAuxiliary.Sales(p.idProduct, p.description, p.available, p.sold, p.reserve, p.price) FROM Products p WHERE p.deleted = false")
+    @Query("SELECT new com.stocktienda.stock.ModelsAuxiliary.Sales(p.idProduct, p.description, p.available, p.sold, p.reserve, p.price, p.card) FROM Products p WHERE p.deleted = false")
     public List<Sales> viewProrductsSales();
     
 }

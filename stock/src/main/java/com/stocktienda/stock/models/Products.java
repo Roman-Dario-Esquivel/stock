@@ -48,6 +48,9 @@ public class Products {
 
     //precio
     private double price;
+    
+    //precio en tarjeta
+    private double card;
 
     // eliminado
     private boolean deleted;

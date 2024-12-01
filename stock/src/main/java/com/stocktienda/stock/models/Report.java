@@ -36,8 +36,11 @@ public class Report {
     //reservar
     private long reserve;
 
-    //precio
+    //precio efectivo
     private double price;
+
+    //precio tarjeta
+    private double card;
 
     //lista de dañados
     private String damaged;
